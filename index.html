@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaintainIQ — Choose Your Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="external.css">
+</head>
+<body data-page="index">
+  <div class="landing">
+    <div class="landing-brand">
+      <div class="landing-eyebrow">Mini Hackathon · Facility Maintenance</div>
+      <h1 class="landing-title">MAINTAIN<span>IQ</span></h1>
+      <p class="landing-sub">Scan. Report. Diagnose. Maintain. Pick the panel you need — Admin, Technician, or User.</p>
+    </div>
+
+    <div class="switch-row">
+      <a class="switch-card" href="admin.html">
+        <div class="switch-led"></div>
+        <div class="switch-idx">PANEL / 01</div>
+        <div class="switch-title">Admin</div>
+        <div class="switch-desc">Register or sign in to add technicians, post assets, and assign reported issues.</div>
+        <div class="switch-go">OPEN ADMIN PANEL →</div>
+      </a>
+
+      <a class="switch-card" href="technician.html">
+        <div class="switch-led"></div>
+        <div class="switch-idx">PANEL / 02</div>
+        <div class="switch-title">Technician</div>
+        <div class="switch-desc">Sign in with credentials issued by an admin to view tasks and resolve issues.</div>
+        <div class="switch-go">OPEN TECHNICIAN PANEL →</div>
+      </a>
+
+      <a class="switch-card" href="user.html">
+        <div class="switch-led"></div>
+        <div class="switch-idx">PANEL / 03</div>
+        <div class="switch-title">User</div>
+        <div class="switch-desc">Register or sign in to browse assets and report a maintenance issue.</div>
+        <div class="switch-go">OPEN USER PANEL →</div>
+      </a>
+    </div>
+
+    <div class="landing-footer">
+      Default admin login: <strong>admin / admin123</strong> · Demo data stored locally in this browser.
+      &nbsp;·&nbsp; <button class="reset-link" id="resetBtn">Reset all demo data</button>
+    </div>
+  </div>
+
+  <script src="external.js"></script>
+</body>
+</html>

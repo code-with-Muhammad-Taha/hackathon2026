@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaintainIQ — Admin Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="external.css">
+</head>
+<body data-page="admin">
+
+<!-- ================= AUTH SCREEN ================= -->
+<div class="auth-shell" id="authShell">
+  <div class="auth-card">
+    <a class="auth-back" href="index.html">← Portals</a>
+    <div class="auth-tag">Panel 01 · Admin</div>
+    <h2 class="auth-title">Admin Access</h2>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabLogin">Login</button>
+      <button class="tab-btn" id="tabRegister">Register</button>
+    </div>
+
+    <!-- Login form -->
+    <form class="form-view" id="loginForm">
+      <div class="field">
+        <label for="loginUser">Username</label>
+        <input type="text" id="loginUser" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="loginPass">Password</label>
+        <input type="password" id="loginPass" autocomplete="current-password" required>
+      </div>
+      <div class="form-error" id="loginError"></div>
+      <button type="submit" class="btn block">Sign In</button>
+    </form>
+
+    <!-- Register form -->
+    <form class="form-view hidden" id="registerForm">
+      <div class="field">
+        <label for="regName">Full name</label>
+        <input type="text" id="regName" required>
+      </div>
+      <div class="field">
+        <label for="regUser">Choose a username</label>
+        <input type="text" id="regUser" required>
+      </div>
+      <div class="field">
+        <label for="regPass">Choose a password</label>
+        <input type="password" id="regPass" required>
+      </div>
+      <div class="form-error" id="registerError"></div>
+      <button type="submit" class="btn block">Create Admin Account</button>
+    </form>
+
+    <div class="seed-hint">Default admin login → admin / admin123</div>
+  </div>
+</div>
+
+<!-- ================= PORTAL SHELL ================= -->
+<div class="portal-shell hidden" id="portalShell">
+  <aside class="sidebar">
+    <div>
+      <div class="sb-brand">MAINTAIN<span>IQ</span></div>
+      <div class="sb-role">Admin Panel</div>
+    </div>
+    <nav class="sb-nav">
+      <button class="sb-link active" data-view="dashboard">Dashboard</button>
+      <button class="sb-link" data-view="assets">Assets</button>
+      <button class="sb-link" data-view="technicians">Technicians</button>
+      <button class="sb-link" data-view="issues">Issues</button>
+      <button class="sb-link" data-view="notifications">Notifications <span class="sb-badge hidden" id="notifCount">0</span></button>
+    </nav>
+    <div class="sb-user">
+      <div class="sb-user-name" id="sbUserName">—</div>
+      <div style="color:var(--steel);font-size:12px;">Administrator</div>
+      <button class="btn ghost sb-logout" id="logoutBtn" style="color:var(--paper);border-color:var(--panel-line);">Log Out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- DASHBOARD -->
+    <section class="view" id="view-dashboard">
+      <div class="topbar">
+        <div>
+          <h1>Dashboard</h1>
+          <div class="subtitle">Operational overview across all registered assets.</div>
+        </div>
+      </div>
+      <div class="stat-row" id="statRow"></div>
+      <div class="panel-block">
+        <h3>Recent Notifications</h3>
+        <div class="notif-list" id="dashNotifList"></div>
+      </div>
+    </section>
+
+    <!-- ASSETS -->
+    <section class="view hidden" id="view-assets">
+      <div class="topbar">
+        <div>
+          <h1>Assets</h1>
+          <div class="subtitle">Register a new asset and manage the existing inventory.</div>
+        </div>
+      </div>
+
+      <div class="panel-block">
+        <h3>Register New Asset</h3>
+        <form id="assetForm" class="form-grid">
+          <div class="field">
+            <label for="astName">Asset name</label>
+            <input type="text" id="astName" required placeholder="e.g. Classroom Projector 02">
+          </div>
+          <div class="field">
+            <label for="astCategory">Category</label>
+            <input type="text" id="astCategory" required placeholder="e.g. Electronics">
+          </div>
+          <div class="field">
+            <label for="astLocation">Location</label>
+            <input type="text" id="astLocation" required placeholder="e.g. Block B · Room 12">
+          </div>
+          <div class="field">
+            <label for="astCondition">Condition</label>
+            <select id="astCondition">
+              <option>Good</option>
+              <option>Fair</option>
+              <option>Poor</option>
+            </select>
+          </div>
+          <div class="field" style="grid-column: 1 / -1;">
+            <button type="submit" class="btn">+ Add Asset</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="section-title-row">
+        <h3 style="margin:0;">Inventory <span class="mono" style="color:var(--steel-dark);font-size:13px;" id="assetCountLabel"></span></h3>
+      </div>
+      <div class="ticket-grid" id="assetGrid"></div>
+    </section>
+
+    <!-- TECHNICIANS -->
+    <section class="view hidden" id="view-technicians">
+      <div class="topbar">
+        <div>
+          <h1>Technicians</h1>
+          <div class="subtitle">Add technician accounts. They will use these credentials on the Technician Panel.</div>
+        </div>
+      </div>
+
+      <div class="panel-block">
+        <h3>Add Technician</h3>
+        <form id="techForm" class="form-grid">
+          <div class="field">
+            <label for="techName">Full name</label>
+            <input type="text" id="techName" required>
+          </div>
+          <div class="field">
+            <label for="techSpecialty">Specialty</label>
+            <input type="text" id="techSpecialty" required placeholder="e.g. Electrical, HVAC">
+          </div>
+          <div class="field">
+            <label for="techUser">Username</label>
+            <input type="text" id="techUser" required>
+          </div>
+          <div class="field">
+            <label for="techPass">Temporary password</label>
+            <input type="text" id="techPass" required>
+          </div>
+          <div class="field" style="grid-column: 1 / -1;">
+            <button type="submit" class="btn">+ Add Technician</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel-block">
+        <h3>Technician Roster</h3>
+        <table class="data-table" id="techTable">
+          <thead><tr><th>Name</th><th>Specialty</th><th>Username</th><th>Password</th><th>Assigned Tasks</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ISSUES -->
+    <section class="view hidden" id="view-issues">
+      <div class="topbar">
+        <div>
+          <h1>Reported Issues</h1>
+          <div class="subtitle">Assign issues to a technician and track them through to resolution.</div>
+        </div>
+      </div>
+      <div class="ticket-grid" id="issueGrid"></div>
+    </section>
+
+    <!-- NOTIFICATIONS -->
+    <section class="view hidden" id="view-notifications">
+      <div class="topbar">
+        <div>
+          <h1>Notifications</h1>
+          <div class="subtitle">Issue reports and technician resolution messages.</div>
+        </div>
+      </div>
+      <div class="notif-list" id="fullNotifList"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ================= ASSIGN MODAL ================= -->
+<div class="modal-backdrop hidden" id="assignModal">
+  <div class="modal-card">
+    <h3>Assign Issue</h3>
+    <div class="modal-sub" id="assignModalSub">Choose a technician to handle this issue.</div>
+    <div class="field">
+      <label for="assignTechSelect">Technician</label>
+      <select id="assignTechSelect"></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="assignCancel">Cancel</button>
+      <button class="btn" id="assignConfirm">Assign</button>
+    </div>
+  </div>
+</div>
+
+<script src="external.js"></script>
+</body>
+</html>

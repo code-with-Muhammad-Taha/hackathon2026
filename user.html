@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaintainIQ — User Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="external.css">
+</head>
+<body data-page="user">
+
+<!-- ================= AUTH SCREEN ================= -->
+<div class="auth-shell" id="authShell">
+  <div class="auth-card">
+    <a class="auth-back" href="index.html">← Portals</a>
+    <div class="auth-tag">Panel 03 · User</div>
+    <h2 class="auth-title">User Access</h2>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabLogin">Login</button>
+      <button class="tab-btn" id="tabRegister">Register</button>
+    </div>
+
+    <form class="form-view" id="loginForm">
+      <div class="field">
+        <label for="loginUser">Username</label>
+        <input type="text" id="loginUser" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="loginPass">Password</label>
+        <input type="password" id="loginPass" autocomplete="current-password" required>
+      </div>
+      <div class="form-error" id="loginError"></div>
+      <button type="submit" class="btn block">Sign In</button>
+    </form>
+
+    <form class="form-view hidden" id="registerForm">
+      <div class="field">
+        <label for="regName">Full name</label>
+        <input type="text" id="regName" required>
+      </div>
+      <div class="field">
+        <label for="regUser">Choose a username</label>
+        <input type="text" id="regUser" required>
+      </div>
+      <div class="field">
+        <label for="regPass">Choose a password</label>
+        <input type="password" id="regPass" required>
+      </div>
+      <div class="form-error" id="registerError"></div>
+      <button type="submit" class="btn block">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= PORTAL SHELL ================= -->
+<div class="portal-shell hidden" id="portalShell">
+  <aside class="sidebar">
+    <div>
+      <div class="sb-brand">MAINTAIN<span>IQ</span></div>
+      <div class="sb-role">User Panel</div>
+    </div>
+    <nav class="sb-nav">
+      <button class="sb-link active" data-view="assets">Browse Assets</button>
+      <button class="sb-link" data-view="myreports">My Reports</button>
+    </nav>
+    <div class="sb-user">
+      <div class="sb-user-name" id="sbUserName">—</div>
+      <div style="color:var(--steel);font-size:12px;">Reporter</div>
+      <button class="btn ghost sb-logout" id="logoutBtn" style="color:var(--paper);border-color:var(--panel-line);">Log Out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- BROWSE ASSETS -->
+    <section class="view" id="view-assets">
+      <div class="topbar">
+        <div>
+          <h1>Assets</h1>
+          <div class="subtitle">Browse registered assets and report a problem if something's wrong.</div>
+        </div>
+      </div>
+      <div class="ticket-grid" id="assetGrid"></div>
+    </section>
+
+    <!-- MY REPORTS -->
+    <section class="view hidden" id="view-myreports">
+      <div class="topbar">
+        <div>
+          <h1>My Reports</h1>
+          <div class="subtitle">Issues you've reported and their current status.</div>
+        </div>
+      </div>
+      <div class="ticket-grid" id="myReportGrid"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ================= REPORT MODAL ================= -->
+<div class="modal-backdrop hidden" id="reportModal">
+  <div class="modal-card">
+    <h3>Report an Issue</h3>
+    <div class="modal-sub" id="reportModalSub">Describe the problem you noticed.</div>
+    <form id="reportForm" class="form-view">
+      <div class="field">
+        <label for="repTitle">Title</label>
+        <input type="text" id="repTitle" required placeholder="e.g. Projector display flickering">
+      </div>
+      <div class="field">
+        <label for="repDescription">Description</label>
+        <textarea id="repDescription" required placeholder="Describe what's wrong in detail"></textarea>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="repPriority">Priority</label>
+          <select id="repPriority">
+            <option>Low</option>
+            <option selected>Medium</option>
+            <option>High</option>
+            <option>Critical</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="repCategory">Category</label>
+          <input type="text" id="repCategory" required placeholder="e.g. Electronics">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn ghost" id="reportCancel">Cancel</button>
+        <button type="submit" class="btn">Submit Report</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="external.js"></script>
+</body>
+</html>
